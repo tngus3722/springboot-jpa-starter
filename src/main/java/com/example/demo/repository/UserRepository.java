@@ -27,14 +27,19 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Long getUserWrapper(Long id);
 
 
+
     @Query(value = "select new com.example.demo.wrapper.UserWrapper(u, (select count(*) from MajorEntity m where m.userEntity = u) as t) from UserEntity u where u.id = ?1")
     UserWrapper test(Long id);
+
 
 
     @Query(value = "select new com.example.demo.entity.UserEntity(u, (select count(*) from MajorEntity m where m.userEntity = u) as t) from UserEntity u where u.id = ?1")
     UserEntity test2(Long id);
 
-    @Query(value = "select new com.example.demo.entity.UserEntity(u, (select count(*) from MajorEntity m where m.userEntity = u) as t) from UserEntity u")
+    @Query(value = "select new com.example.demo.entity.UserEntity( u.id, u.portalAccount, (select count(*) from MajorEntity m where m.userEntity = u) as t) " +
+            "from UserEntity u " +
+            "order by t desc")
     List<UserEntity> test3();
+
 
 }

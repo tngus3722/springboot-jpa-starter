@@ -28,6 +28,16 @@ public class UserEntity {
         this.majorCount = count;
     }
 
+    public UserEntity( Long count){
+        this.majorCount = count;
+    }
+
+    public UserEntity( Long id, String portalAccount, Long count){
+        this.id = id;
+        this.portalAccount =portalAccount;
+        this.majorCount = count;
+    }
+
     @Transient
     public Long getMajorCount() {
         return majorCount;
