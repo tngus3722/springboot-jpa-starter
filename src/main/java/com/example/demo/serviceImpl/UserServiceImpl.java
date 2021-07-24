@@ -162,4 +162,9 @@ public class UserServiceImpl implements UserService {
     public User getSubQueryAndGetEntity(){
         return UserMapper.INSTANCE.toUser(userRepository.test2(Long.valueOf(16)));
     }
+
+    @Override
+    public List<User> getSubQueryAndGetEntity2(){
+        return userRepository.test3().stream().map(UserMapper.INSTANCE::toUser).collect(Collectors.toList());
+    }
 }

@@ -15,4 +15,5 @@ public interface UserService {
     void deleteUser(User user);
     UserWrapper getSubQueryAndGetDTO();
     User getSubQueryAndGetEntity();
+    List<User> getSubQueryAndGetEntity2();
 }

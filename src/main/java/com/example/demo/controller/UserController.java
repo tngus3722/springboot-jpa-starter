@@ -70,4 +70,9 @@ public class UserController {
     public ResponseEntity<User> test(){
         return new ResponseEntity<User>( userService.getSubQueryAndGetEntity(), HttpStatus.OK);
     }
+    @GetMapping("/test2")
+    @ApiOperation(value ="회원 가입" , notes = "회원 가입")
+    public ResponseEntity<List<User>> test2(){
+        return new ResponseEntity<List<User>>( userService.getSubQueryAndGetEntity2(), HttpStatus.OK);
+    }
 }
