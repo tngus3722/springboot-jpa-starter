@@ -151,7 +151,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    //서브쿼리 극복!
+    //서브쿼리 극복! 
     @Override
     public UserWrapper getSubQueryAndGetDTO(){
         return userRepository.test(Long.valueOf(16));
