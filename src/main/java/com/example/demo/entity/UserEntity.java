@@ -1,10 +1,15 @@
 package com.example.demo.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user", schema = "jpatest", catalog = "")
 public class UserEntity {
     private Long id;
@@ -12,6 +17,25 @@ public class UserEntity {
     private String password;
     private String nickname;
     private List<MajorEntity> majorEntityList;
+    private Long majorCount;
+
+    public UserEntity(UserEntity userEntity, Long count){
+        this.id = userEntity.id;
+        this.portalAccount = userEntity.getPortalAccount();
+        this.password = userEntity.getPassword();
+        this.nickname = userEntity.getNickname();
+        this.majorEntityList = userEntity.getMajorEntityList();
+        this.majorCount = count;
+    }
+
+    @Transient
+    public Long getMajorCount() {
+        return majorCount;
+    }
+
+    public void setMajorCount(Long majorCount) {
+        this.majorCount = majorCount;
+    }
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     public List<MajorEntity> getMajorEntityList() {

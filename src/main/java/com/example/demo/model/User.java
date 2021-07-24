@@ -16,5 +16,6 @@ public class User {
     private String password;
     private String nickname;
     private List<Major> majorEntityList;
+    private Long majorCount;
 
 }

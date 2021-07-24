@@ -67,7 +67,7 @@ public class UserController {
 
     @GetMapping("/test")
     @ApiOperation(value ="회원 가입" , notes = "회원 가입")
-    public ResponseEntity<UserWrapper> test(){
-        return new ResponseEntity<UserWrapper>( userService.getSubQueryAndGetDTO(), HttpStatus.OK);
+    public ResponseEntity<User> test(){
+        return new ResponseEntity<User>( userService.getSubQueryAndGetEntity(), HttpStatus.OK);
     }
 }

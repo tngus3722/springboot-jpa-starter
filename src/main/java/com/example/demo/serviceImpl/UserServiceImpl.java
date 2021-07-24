@@ -156,4 +156,10 @@ public class UserServiceImpl implements UserService {
     public UserWrapper getSubQueryAndGetDTO(){
         return userRepository.test(Long.valueOf(16));
     }
+
+
+    @Override
+    public User getSubQueryAndGetEntity(){
+        return UserMapper.INSTANCE.toUser(userRepository.test2(Long.valueOf(16)));
+    }
 }
