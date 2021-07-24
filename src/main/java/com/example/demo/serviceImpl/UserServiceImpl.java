@@ -6,6 +6,7 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
+import com.example.demo.wrapper.UserWrapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -149,4 +150,10 @@ public class UserServiceImpl implements UserService {
         //userRepository.deleteUserByUserEntity(entityManager.getReference(UserEntity.class,user.getId()));
     }
 
+
+    //서브쿼리 극복
+    @Override
+    public UserWrapper getSubQueryAndGetDTO(){
+        return userRepository.test(Long.valueOf(16));
+    }
 }

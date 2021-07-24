@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import com.example.demo.wrapper.UserWrapper;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,5 +62,12 @@ public class UserController {
     public ResponseEntity deleteUser(@RequestBody User user){
         userService.deleteUser(user);
         return new ResponseEntity( null, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/test")
+    @ApiOperation(value ="회원 가입" , notes = "회원 가입")
+    public ResponseEntity<UserWrapper> test(){
+        return new ResponseEntity<UserWrapper>( userService.getSubQueryAndGetDTO(), HttpStatus.OK);
     }
 }
