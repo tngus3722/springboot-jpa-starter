@@ -17,5 +17,6 @@ public class User {
     private String nickname;
     private List<Major> majorEntityList;
     private Long majorCount;
+    private List<Address> addressEntities;
 
 }

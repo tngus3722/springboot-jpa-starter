@@ -7,10 +7,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
-public interface UserMapper extends MajorMapper {
+public interface UserMapper extends MajorMapper,AddressMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
-
 
     User toUser(UserEntity userEntity);
 }

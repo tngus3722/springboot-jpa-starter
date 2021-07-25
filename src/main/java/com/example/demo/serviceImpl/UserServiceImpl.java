@@ -1,5 +1,6 @@
 package com.example.demo.serviceImpl;
 
+import com.example.demo.entity.AddressEntity;
 import com.example.demo.entity.MajorEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.mapper.UserMapper;
@@ -43,6 +44,16 @@ public class UserServiceImpl implements UserService {
                 majorEntityList.add(majorEntity);
             }
         }
+        List<AddressEntity> addressEntities = new ArrayList<>();
+        if ( user.getMajorEntityList() != null && !user.getMajorEntityList().isEmpty() ) {
+            for (int i = 0; i < user.getAddressEntities().size(); i++) {
+                AddressEntity addressEntity = new AddressEntity();
+                addressEntity.setAddress(user.getAddressEntities().get(i).getAddress());
+                addressEntity.setUserEntity(userEntity);
+                addressEntities.add(addressEntity);
+            }
+        }
+        userEntity.setAddressEntities(addressEntities);
         userEntity.setMajorEntityList(majorEntityList);
 
         userRepository.save(userEntity); // save also major bacause of CASCADE.ALL (PERSIST)
@@ -52,7 +63,7 @@ public class UserServiceImpl implements UserService {
     // 쿼리 결과를 중요하게 봅시다
     @Override
     public User getMe() { // 토큰만들기 귀찮아서 그냥 3번유저로 합니다 ㅎㅎ
-        return UserMapper.INSTANCE.toUser(userRepository.findById(Long.valueOf(3)).get());
+        return UserMapper.INSTANCE.toUser(userRepository.findById(Long.valueOf(25)).get());
     }
 
 
@@ -154,13 +165,13 @@ public class UserServiceImpl implements UserService {
     //서브쿼리 극복!
     @Override
     public UserWrapper getSubQueryAndGetDTO(){
-        return userRepository.test(Long.valueOf(16));
+        return userRepository.test(Long.valueOf(25));
     }
 
 
     @Override
     public User getSubQueryAndGetEntity(){
-        return UserMapper.INSTANCE.toUser(userRepository.test2(Long.valueOf(16)));
+        return UserMapper.INSTANCE.toUser(userRepository.test2(Long.valueOf(25)));
     }
 
     @Override

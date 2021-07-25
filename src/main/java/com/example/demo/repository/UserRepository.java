@@ -36,7 +36,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query(value = "select new com.example.demo.entity.UserEntity(u, (select count(*) from MajorEntity m where m.userEntity = u) as t) from UserEntity u where u.id = ?1")
     UserEntity test2(Long id);
 
-    @Query(value = "select new com.example.demo.entity.UserEntity( u.id, u.portalAccount, (select count(*) from MajorEntity m where m.userEntity = u) as t) " +
+    @Query(value = "select new com.example.demo.entity.UserEntity( u, (select count(*) from MajorEntity m where m.userEntity = u) as t) " +
             "from UserEntity u " +
             "order by t desc")
     List<UserEntity> test3();

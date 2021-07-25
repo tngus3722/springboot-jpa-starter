@@ -2,10 +2,13 @@ package com.example.demo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 @NoArgsConstructor
@@ -17,28 +20,40 @@ public class UserEntity {
     private String password;
     private String nickname;
     private List<MajorEntity> majorEntityList;
+    private List<AddressEntity> addressEntities;
     private Long majorCount;
 
-    public UserEntity(UserEntity userEntity, Long count){
-        this.id = userEntity.id;
+    public UserEntity(Long id, String portalAccount, String password, String nickname ,Long majorCount){
+        this.id =id;
+        this.portalAccount =portalAccount;
+        this.password = password;
+        this.nickname = nickname;
+        this.majorCount =majorCount;
+
+
+    }
+    public UserEntity(UserEntity userEntity, Long count) {
+        this.id = userEntity.getId();
         this.portalAccount = userEntity.getPortalAccount();
         this.password = userEntity.getPassword();
         this.nickname = userEntity.getNickname();
+        this.majorCount = count;
         this.majorEntityList = userEntity.getMajorEntityList();
-        this.majorCount = count;
+        this.addressEntities = userEntity.getAddressEntities();
     }
 
-    public UserEntity( Long count){
-        this.majorCount = count;
+
+
+    @OneToMany(mappedBy = "userEntity" ,orphanRemoval = true , cascade = CascadeType.ALL)
+    public List<AddressEntity> getAddressEntities() {
+        return addressEntities;
     }
 
-    public UserEntity( Long id, String portalAccount, Long count){
-        this.id = id;
-        this.portalAccount =portalAccount;
-        this.majorCount = count;
+    public void setAddressEntities(List<AddressEntity> addressEntities) {
+        this.addressEntities = addressEntities;
     }
 
-    @Transient
+    @Formula("(select count(*) from major m where m.user_id = id)")
     public Long getMajorCount() {
         return majorCount;
     }
