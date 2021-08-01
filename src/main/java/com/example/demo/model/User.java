@@ -18,5 +18,4 @@ public class User {
     private List<Major> majorEntityList;
     private Long majorCount;
     private List<Address> addressEntities;
-
 }

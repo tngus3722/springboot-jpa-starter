@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
-import com.example.demo.wrapper.UserWrapper;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,54 +24,29 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    @ApiOperation(value ="회원 가입" , notes = "회원 가입")
+    @ApiOperation(value ="단일 회원 조회 " , notes = "단일 회원 조회")
     public ResponseEntity<User> getMe(){
         return new ResponseEntity<User>( userService.getMe(), HttpStatus.OK);
     }
 
     @GetMapping("/users")
-    @ApiOperation(value ="회원 가입" , notes = "회원 가입")
+    @ApiOperation(value ="모든 회원 조회" , notes = "모든 회원 조회")
     public ResponseEntity<List<User>> getUsers(){
         return new ResponseEntity<List<User>>( userService.getAllUser(), HttpStatus.OK);
     }
 
     @PutMapping("/user")
-    @ApiOperation(value ="회원 가입" , notes = "회원 가입")
+    @ApiOperation(value ="회원 수정" , notes = "회원 수정")
     public ResponseEntity updateUser(@RequestBody User user){
         userService.updateUser(user);
         return new ResponseEntity( null, HttpStatus.OK);
     }
 
-    @PutMapping("/user2")
-    @ApiOperation(value ="회원 가입" , notes = "회원 가입")
-    public ResponseEntity updateUser2(@RequestBody User user){
-        userService.updateUser2(user);
-        return new ResponseEntity( null, HttpStatus.OK);
-    }
-
-    @PutMapping("/user3")
-    @ApiOperation(value ="회원 가입" , notes = "회원 가입")
-    public ResponseEntity updateUser3(@RequestBody User user){
-        userService.updateUser3(user);
-        return new ResponseEntity( null, HttpStatus.OK);
-    }
-
     @DeleteMapping("/user")
-    @ApiOperation(value ="회원 가입" , notes = "회원 가입")
+    @ApiOperation(value ="회원 삭제" , notes = "회원 삭제")
     public ResponseEntity deleteUser(@RequestBody User user){
         userService.deleteUser(user);
         return new ResponseEntity( null, HttpStatus.OK);
     }
 
-
-    @GetMapping("/test")
-    @ApiOperation(value ="회원 가입" , notes = "회원 가입")
-    public ResponseEntity<User> test(){
-        return new ResponseEntity<User>( userService.getSubQueryAndGetEntity(), HttpStatus.OK);
-    }
-    @GetMapping("/test2")
-    @ApiOperation(value ="회원 가입" , notes = "회원 가입")
-    public ResponseEntity<List<User>> test2(){
-        return new ResponseEntity<List<User>>( userService.getSubQueryAndGetEntity2(), HttpStatus.OK);
-    }
 }
