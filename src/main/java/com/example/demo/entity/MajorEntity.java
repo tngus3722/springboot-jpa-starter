@@ -18,6 +18,7 @@ public class MajorEntity {
     @Column(name = "id")
     private Long id;
     private String major;
+    @Column(name = "is_deleted")
     private boolean isDeleted;
     @ManyToOne
     @JoinColumn(name = "user_id")
