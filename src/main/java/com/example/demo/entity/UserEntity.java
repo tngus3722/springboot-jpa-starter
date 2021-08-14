@@ -52,8 +52,10 @@ public class UserEntity {
         this.password = user.getPassword();
         this.portalAccount = user.getPortalAccount();
         this.nickname = user.getNickname();
+        user.getMajorEntityList().clear();
         for (Major m : user.getMajorEntityList())
             this.majorEntityList.add(new MajorEntity(m, this));
+        user.getAddressEntities().clear();
         for (Address a : user.getAddressEntities())
             this.addressEntities.add(new AddressEntity(a, this));
     }
