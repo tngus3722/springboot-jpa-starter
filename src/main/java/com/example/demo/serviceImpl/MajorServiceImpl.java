@@ -5,4 +5,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MajorServiceImpl implements MajorService {
+
+    /**
+     * Entity <-> dto
+     * return dto
+     *
+     *
+     *
+     */
 }

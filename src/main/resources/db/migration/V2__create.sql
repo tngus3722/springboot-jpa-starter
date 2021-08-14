@@ -18,3 +18,12 @@ create table if not exists jpatest.address (
     address varchar(20) not null
 )default character set utf8 collate utf8_general_ci;
 
+
+alter table jpatest.user  add column created_at TIMESTAMP default current_timestamp ;
+alter table jpatest.user   add column updated_at TIMESTAMP default current_timestamp ;
+
+alter table jpatest.major   add column created_at TIMESTAMP default current_timestamp ;
+alter table jpatest.major   add column updated_at TIMESTAMP default current_timestamp ;
+
+alter table jpatest.address   add column created_at TIMESTAMP default current_timestamp ;
+alter table jpatest.address   add column updated_at TIMESTAMP default current_timestamp ;

@@ -1,11 +1,13 @@
 package com.example.demo.entity;
 
+import com.example.demo.model.Major;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.sql.Timestamp;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,4 +25,16 @@ public class MajorEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
+    @Basic
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Timestamp created_at;
+    @Basic
+    @Column(name = "updated_at")
+    private Timestamp updated_at;
+
+    public MajorEntity(Major major, UserEntity userEntity){
+        this.major = major.getMajor();
+        this.userEntity = userEntity;
+    }
 }
