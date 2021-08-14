@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -30,6 +31,7 @@ public class MajorEntity {
     @Column(name = "created_at", updatable = false)
     private Timestamp created_at;
     @Basic
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private Timestamp updated_at;
 

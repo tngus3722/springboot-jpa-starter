@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -11,12 +11,10 @@ import java.util.List;
 
 @Data
 public class User {
-    @JsonIgnore
+    @ApiModelProperty(hidden = true)
     private Long id;
     @NotNull
-    @NotNull
     private String portalAccount;
-    @JsonIgnore
     @NotNull
     private String password;
     @NotNull
@@ -28,6 +26,8 @@ public class User {
     @NotNull
     @Size(min =  1)
     private List<Address> addressEntities;
+    @ApiModelProperty(hidden = true)
     private Timestamp created_at;
+    @ApiModelProperty(hidden = true)
     private Timestamp updated_at;
 }

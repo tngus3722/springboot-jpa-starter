@@ -9,7 +9,7 @@ public interface UserService {
 
     User getMe() throws Exception;
 
-    List<User> getAllUser() throws Exception;
+    List<User> getAllUser(Integer page, Integer limit) throws Exception;
 
     void updateUser(User user) throws Exception;
 

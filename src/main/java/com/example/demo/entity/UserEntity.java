@@ -7,9 +7,11 @@ import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -40,22 +42,25 @@ public class UserEntity {
     @Column(name = "created_at", updatable = false)
     private Timestamp created_at;
     @Basic
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private Timestamp updated_at;
 
 
     public UserEntity(User user) {
+        this.password = user.getPassword();
         this.updateUser(user);
     }
 
     public void updateUser(User user) {
-        this.password = user.getPassword();
         this.portalAccount = user.getPortalAccount();
         this.nickname = user.getNickname();
-        user.getMajorEntityList().clear();
+
+        this.majorEntityList = new ArrayList<>();
         for (Major m : user.getMajorEntityList())
             this.majorEntityList.add(new MajorEntity(m, this));
-        user.getAddressEntities().clear();
+
+        this.addressEntities = new ArrayList<>();
         for (Address a : user.getAddressEntities())
             this.addressEntities.add(new AddressEntity(a, this));
     }

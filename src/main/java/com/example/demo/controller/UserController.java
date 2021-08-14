@@ -31,8 +31,8 @@ public class UserController {
 
     @GetMapping("/users")
     @ApiOperation(value = "모든 회원 조회", notes = "모든 회원 조회")
-    public ResponseEntity<List<User>> getUsers() throws Exception {
-        return new ResponseEntity<List<User>>(userService.getAllUser(), HttpStatus.OK);
+    public ResponseEntity<List<User>> getUsers(@RequestParam Integer page, @RequestParam Integer limit) throws Exception {
+        return new ResponseEntity<List<User>>(userService.getAllUser(page, limit), HttpStatus.OK);
     }
 
     @PutMapping("/user")
@@ -48,5 +48,4 @@ public class UserController {
         userService.deleteUser(user);
         return new ResponseEntity(null, HttpStatus.OK);
     }
-
 }

@@ -5,6 +5,8 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,12 +32,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getMe() {
-        return UserMapper.INSTANCE.toUser(userRepository.findById(Long.valueOf(1)).get());
+        return UserMapper
+                .INSTANCE
+                .toUser(userRepository.findById(Long.valueOf(1)).get());
     }
 
     @Override
-    public List<User> getAllUser() {
-        return userRepository.findAll().stream().map(UserMapper.INSTANCE::toUser).collect(Collectors.toList());
+    public List<User> getAllUser(Integer page, Integer limit) {
+        return userRepository.findAll(PageRequest.of(page,limit,Sort.by("id").descending()))
+                .stream()
+                .map(UserMapper.INSTANCE::toUser)
+                .collect(Collectors.toList());
     }
 
     @Override
