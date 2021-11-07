@@ -23,7 +23,7 @@ public class MajorEntity {
     private String major;
     @Column(name = "is_deleted")
     private boolean isDeleted;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
     @Basic

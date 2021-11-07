@@ -20,7 +20,8 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "user", schema = "jpatest", catalog = "")
 public class UserEntity {
     @Id
@@ -29,7 +30,9 @@ public class UserEntity {
     private Long id;
     @Column(name = "portal_account")
     private String portalAccount;
+    @Column(name = "password")
     private String password;
+    @Column(name = "nickname")
     private String nickname;
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MajorEntity> majorEntityList;
