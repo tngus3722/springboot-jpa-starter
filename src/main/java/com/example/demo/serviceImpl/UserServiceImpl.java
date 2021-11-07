@@ -25,11 +25,13 @@ public class UserServiceImpl implements UserService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Transactional
     @Override
     public void SignIn(User user) throws Exception {
         userRepository.save(new UserEntity(user));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public User getMe() {
         return UserMapper
@@ -37,6 +39,7 @@ public class UserServiceImpl implements UserService {
                 .toUser(userRepository.findById(Long.valueOf(1)).get());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<User> getAllUser(Integer page, Integer limit) {
         return userRepository.findAll(PageRequest.of(page,limit,Sort.by("id").descending()))
@@ -45,11 +48,13 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     @Override
     public void updateUser(User user) {
         userRepository.findById(user.getId()).get().updateUser(user);
     }
 
+    @Transactional
     @Override
     public void deleteUser(User user) {
         userRepository.delete(entityManager.getReference(UserEntity.class, user.getId()));
