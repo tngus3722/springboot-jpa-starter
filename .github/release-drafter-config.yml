@@ -1,0 +1,12 @@
+name-template: 'v$NEXT_MINOR_VERSION'
+tag-template: 'v$NEXT_MINOR_VERSION'
+categories:
+  - title: '🚀 Features'
+    label: 'enhancement'
+  - title: '🐛 bugfix'
+    label: 'bugfix'
+  - title: '🪡refactoring'
+    label: 'refactoring'
+change-template: '- $TITLE #$NUMBER @$AUTHOR '
+template: |
+  $CHANGES
