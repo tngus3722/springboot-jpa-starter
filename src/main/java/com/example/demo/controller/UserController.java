@@ -2,12 +2,16 @@ package com.example.demo.controller;
 
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -48,4 +52,18 @@ public class UserController {
         userService.deleteUser(user);
         return new ResponseEntity(null, HttpStatus.OK);
     }
+
+    @KafkaListener(topics = "TOPIC", groupId = "test")
+    public void consume(String message) throws IOException {
+        System.out.println("스트링 : " + String.format("Consumed message : %s", message));
+    }
+
+    @Resource
+    private KafkaTemplate<String,String> kafkaProducer;
+    @GetMapping("/kafka/test")
+    public void produce() throws Exception{
+        kafkaProducer.send("TOPIC", new ObjectMapper().writeValueAsString("testFromSpringboot"));
+    }
+
+
 }

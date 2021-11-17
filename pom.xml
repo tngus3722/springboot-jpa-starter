@@ -34,6 +34,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- kafka -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+
         <!-- validation -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
