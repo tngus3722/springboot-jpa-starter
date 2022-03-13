@@ -1,11 +1,14 @@
 package com.example.demo.model;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-
 import java.sql.Timestamp;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@NoArgsConstructor
+@Setter
+@Getter
 public class Address {
     @ApiModelProperty(hidden = true)
     private Long id;

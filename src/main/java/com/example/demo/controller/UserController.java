@@ -4,6 +4,7 @@ import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -14,11 +15,11 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 public class UserController {
 
-    @Resource
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping("/user")
     @ApiOperation(value = "회원 가입", notes = "회원 가입")
@@ -59,9 +60,10 @@ public class UserController {
     }
 
     @Resource
-    private KafkaTemplate<String,String> kafkaProducer;
+    private KafkaTemplate<String, String> kafkaProducer;
+
     @GetMapping("/kafka/test")
-    public void produce() throws Exception{
+    public void produce() throws Exception {
         kafkaProducer.send("TOPIC", new ObjectMapper().writeValueAsString("testFromSpringboot"));
     }
 

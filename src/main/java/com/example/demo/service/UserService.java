@@ -5,6 +5,7 @@ import com.example.demo.model.User;
 import java.util.List;
 
 public interface UserService {
+
     void SignIn(User user) throws Exception;
 
     User getMe() throws Exception;

@@ -5,6 +5,7 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,12 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Transactional
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Resource
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public List<User> getAllUser(Integer page, Integer limit) {
-        return userRepository.findAll(PageRequest.of(page,limit,Sort.by("id").descending()))
+        return userRepository.findAll(PageRequest.of(page, limit, Sort.by("id").descending()))
                 .stream()
                 .map(UserMapper.INSTANCE::toUser)
                 .collect(Collectors.toList());
