@@ -17,26 +17,15 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
-@Table(name = "major", schema = "jpatest", catalog = "")
-public class MajorEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+@Table(name = "major")
+public class MajorEntity extends BaseEntity{
+
     private String major;
     @Column(name = "is_deleted")
     private boolean isDeleted;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
-    @Basic
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private Timestamp created_at;
-    @Basic
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private Timestamp updated_at;
 
     public MajorEntity(Major major, UserEntity userEntity){
         this.major = major.getMajor();

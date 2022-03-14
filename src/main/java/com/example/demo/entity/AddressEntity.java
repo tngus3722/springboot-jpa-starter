@@ -13,27 +13,18 @@ import java.sql.Timestamp;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "address", schema = "jpatest", catalog = "")
-public class AddressEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+@Table(name = "address")
+public class AddressEntity extends BaseEntity {
+
     private Long id;
     @Column(name = "address")
     private String address;
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity userEntity;
-    @Basic
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private Timestamp created_at;
-    @Basic
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private Timestamp updated_at;
 
-    public AddressEntity(Address address, UserEntity userEntity){
+
+    public AddressEntity(Address address, UserEntity userEntity) {
         this.address = address.getAddress();
         this.userEntity = userEntity;
     }

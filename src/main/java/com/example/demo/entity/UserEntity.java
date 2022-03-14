@@ -22,12 +22,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "user", schema = "jpatest", catalog = "")
-public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+@Table(name = "user")
+public class UserEntity extends BaseEntity {
+
     @Column(name = "portal_account")
     private String portalAccount;
     @Column(name = "password")
@@ -40,14 +37,6 @@ public class UserEntity {
     private List<AddressEntity> addressEntities;
     @Formula("(select count(*) from major m where m.user_id = id)")
     private Long majorCount;
-    @Basic
-    @CreationTimestamp
-    @Column(name = "created_at", updatable = false)
-    private Timestamp created_at;
-    @Basic
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    private Timestamp updated_at;
 
 
     public UserEntity(User user) {
@@ -59,18 +48,22 @@ public class UserEntity {
         this.portalAccount = user.getPortalAccount();
         this.nickname = user.getNickname();
 
-        if ( this.majorEntityList == null )
+        if (this.majorEntityList == null) {
             this.majorEntityList = new ArrayList<>();
-        else
+        } else {
             this.majorEntityList.clear();
-        for (Major m : user.getMajorEntityList())
+        }
+        for (Major m : user.getMajorEntityList()) {
             this.majorEntityList.add(new MajorEntity(m, this));
+        }
 
-        if ( this.addressEntities == null )
+        if (this.addressEntities == null) {
             this.addressEntities = new ArrayList<>();
-        else
+        } else {
             this.addressEntities.clear();
-        for (Address a : user.getAddressEntities())
+        }
+        for (Address a : user.getAddressEntities()) {
             this.addressEntities.add(new AddressEntity(a, this));
+        }
     }
 }
