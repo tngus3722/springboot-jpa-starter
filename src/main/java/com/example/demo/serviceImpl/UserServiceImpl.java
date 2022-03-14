@@ -1,24 +1,23 @@
 package com.example.demo.serviceImpl;
 
+import com.example.demo.dto.request.UserSignUpRequest;
+import com.example.demo.dto.request.UserUpdateRequest;
+import com.example.demo.dto.response.UserResponse;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.mapper.UserMapper;
-import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -28,36 +27,39 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void SignIn(User user) throws Exception {
-        userRepository.save(new UserEntity(user));
+    public UserResponse singUp(UserSignUpRequest userSignUpRequest) {
+        return UserMapper.INSTANCE.toUser(userRepository.save(UserEntity.from(userSignUpRequest)));
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public User getMe() {
-        return UserMapper
-                .INSTANCE
-                .toUser(userRepository.findById(Long.valueOf(1)).get());
+    public UserResponse getMe(Long userId) {
+        return UserMapper.INSTANCE.toUser(this.getUserEntity(userId));
     }
 
-    @Transactional(readOnly = true)
     @Override
-    public List<User> getAllUser(Integer page, Integer limit) {
-        return userRepository.findAll(PageRequest.of(page, limit, Sort.by("id").descending()))
-                .stream()
+    public List<UserResponse> getUsers(Integer page, Integer limit) {
+        return userRepository.findAll(PageRequest.of(page, limit)).stream()
                 .map(UserMapper.INSTANCE::toUser)
                 .collect(Collectors.toList());
     }
 
     @Transactional
     @Override
-    public void updateUser(User user) {
-        userRepository.findById(user.getId()).get().updateUser(user);
+    public UserResponse updateUser(Long userId, UserUpdateRequest userUpdateRequest) {
+        this.getUserEntity(userId).update(userUpdateRequest);
+        entityManager.flush();
+        entityManager.clear(); // for updatedAt
+
+        return this.getMe(userId);
     }
 
     @Transactional
     @Override
-    public void deleteUser(User user) {
-        userRepository.delete(entityManager.getReference(UserEntity.class, user.getId()));
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+
+    private UserEntity getUserEntity(Long userId) {
+        return userRepository.findById(userId).orElseThrow(RuntimeException::new);
     }
 }

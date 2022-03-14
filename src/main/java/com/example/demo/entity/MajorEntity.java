@@ -1,16 +1,11 @@
 package com.example.demo.entity;
 
-import com.example.demo.model.Major;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,8 +22,4 @@ public class MajorEntity extends BaseEntity{
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    public MajorEntity(Major major, UserEntity userEntity){
-        this.major = major.getMajor();
-        this.userEntity = userEntity;
-    }
 }

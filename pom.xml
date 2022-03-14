@@ -47,12 +47,17 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
+        <!-- StringUtils -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.12.0</version>
+        </dependency>
         <!-- hibernate -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -60,27 +65,22 @@
             <version>1.18.2</version>
             <scope>provided</scope>
         </dependency>
-
         <!-- mapstruct -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
             <version>1.4.2.Final</version>
         </dependency>
-
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
             <version>1.4.2.Final</version>
         </dependency>
-
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
-            <!--버전을 넣지 않으면 동작하지 않는다. -->
             <version>2.9.2</version>
-            <!-- solved NumberFormatException in swagger2 -->
             <exclusions>
                 <exclusion>
                     <groupId>io.swagger</groupId>
@@ -92,7 +92,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- solved NumberFormatException in swagger2 -->
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
@@ -106,33 +105,8 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <!--버전을 넣지 않으면 동작하지 않는다. -->
             <version>2.9.2</version>
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
-    <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
-            <annotationProcessorPaths>
-                <path>
-                    <groupId>org.mapstruct</groupId>
-                    <artifactId>mapstruct-processor</artifactId>
-                    <version>1.4.2.Final</version>
-                </path>
-            </annotationProcessorPaths>
-        </configuration>
-    </plugin>
 </project>

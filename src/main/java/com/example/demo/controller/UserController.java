@@ -1,14 +1,18 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.User;
+import com.example.demo.dto.request.UserSignUpRequest;
+import com.example.demo.dto.request.UserUpdateRequest;
+import com.example.demo.dto.response.UserResponse;
 import com.example.demo.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,34 +27,33 @@ public class UserController {
 
     @PostMapping("/user")
     @ApiOperation(value = "회원 가입", notes = "회원 가입")
-    public ResponseEntity test(@RequestBody User user) throws Exception {
-        userService.SignIn(user);
-        return new ResponseEntity(null, HttpStatus.OK);
+    public ResponseEntity<UserResponse> singUp(@RequestBody @Valid UserSignUpRequest userSignUpRequest) {
+        return new ResponseEntity(userService.singUp(userSignUpRequest), HttpStatus.OK);
     }
 
-    @GetMapping("/user")
+    @GetMapping("/user/{userId}")
     @ApiOperation(value = "단일 회원 조회 ", notes = "단일 회원 조회")
-    public ResponseEntity<User> getMe() throws Exception {
-        return new ResponseEntity<User>(userService.getMe(), HttpStatus.OK);
+    public ResponseEntity<UserResponse> getMe(@PathVariable("userId") Long userId) {
+        return new ResponseEntity<>(userService.getMe(userId), HttpStatus.OK);
     }
 
     @GetMapping("/users")
     @ApiOperation(value = "모든 회원 조회", notes = "모든 회원 조회")
-    public ResponseEntity<List<User>> getUsers(@RequestParam Integer page, @RequestParam Integer limit) throws Exception {
-        return new ResponseEntity<List<User>>(userService.getAllUser(page, limit), HttpStatus.OK);
+    public ResponseEntity<List<UserResponse>> getUsers(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer limit) {
+        return new ResponseEntity<>(userService.getUsers(page, limit), HttpStatus.OK);
     }
 
-    @PutMapping("/user")
+    @PutMapping("/user/{userId}")
     @ApiOperation(value = "회원 수정", notes = "회원 수정")
-    public ResponseEntity updateUser(@RequestBody User user) throws Exception {
-        userService.updateUser(user);
-        return new ResponseEntity(null, HttpStatus.OK);
+    public ResponseEntity<UserResponse> updateUser(@PathVariable("userId") Long userId,
+            @RequestBody @Valid UserUpdateRequest userUpdateRequest) {
+        return new ResponseEntity<>(userService.updateUser(userId, userUpdateRequest), HttpStatus.OK);
     }
 
-    @DeleteMapping("/user")
+    @DeleteMapping("/user/{userId}")
     @ApiOperation(value = "회원 삭제", notes = "회원 삭제")
-    public ResponseEntity deleteUser(@RequestBody User user) throws Exception {
-        userService.deleteUser(user);
-        return new ResponseEntity(null, HttpStatus.OK);
+    public ResponseEntity<Void> deleteUser(@PathVariable("userId") Long userId) {
+        userService.deleteUser(userId);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

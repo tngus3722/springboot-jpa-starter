@@ -1,25 +1,17 @@
 package com.example.demo.entity;
 
-import com.example.demo.model.Address;
-import com.example.demo.model.Major;
-import com.example.demo.model.User;
-import com.sun.istack.NotNull;
+import com.example.demo.dto.request.UserSignUpRequest;
+import com.example.demo.dto.request.UserUpdateRequest;
+import com.example.demo.dto.response.UserResponse;
+import java.time.LocalDateTime;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import org.apache.commons.lang3.StringUtils;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Table(name = "user")
@@ -35,35 +27,28 @@ public class UserEntity extends BaseEntity {
     private List<MajorEntity> majorEntityList;
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<AddressEntity> addressEntities;
-    @Formula("(select count(*) from major m where m.user_id = id)")
-    private Long majorCount;
 
-
-    public UserEntity(User user) {
-        this.password = user.getPassword();
-        this.updateUser(user);
+    // static factory method pattern
+    public static UserEntity from(UserSignUpRequest userSignUpRequest) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setPortalAccount(userSignUpRequest.getPortalAccount());
+        userEntity.setPassword(userSignUpRequest.getPassword());
+        userEntity.setNickname(userSignUpRequest.getNickname());
+        return userEntity;
     }
 
-    public void updateUser(User user) {
-        this.portalAccount = user.getPortalAccount();
-        this.nickname = user.getNickname();
-
-        if (this.majorEntityList == null) {
-            this.majorEntityList = new ArrayList<>();
-        } else {
-            this.majorEntityList.clear();
-        }
-        for (Major m : user.getMajorEntityList()) {
-            this.majorEntityList.add(new MajorEntity(m, this));
+    public void update(UserUpdateRequest userUpdateRequest) {
+        if (StringUtils.isNotBlank(userUpdateRequest.getNickname())) {
+            this.setNickname(userUpdateRequest.getNickname());
         }
 
-        if (this.addressEntities == null) {
-            this.addressEntities = new ArrayList<>();
-        } else {
-            this.addressEntities.clear();
+        if (StringUtils.isNotBlank(userUpdateRequest.getPortalAccount())) {
+            this.setPortalAccount(userUpdateRequest.getPortalAccount());
         }
-        for (Address a : user.getAddressEntities()) {
-            this.addressEntities.add(new AddressEntity(a, this));
+
+        if (StringUtils.isNotBlank(userUpdateRequest.getPassword())) {
+            this.setPassword(userUpdateRequest.getPassword());
         }
     }
+
 }

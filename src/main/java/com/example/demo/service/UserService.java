@@ -1,18 +1,19 @@
 package com.example.demo.service;
 
-import com.example.demo.model.User;
-
+import com.example.demo.dto.request.UserSignUpRequest;
+import com.example.demo.dto.request.UserUpdateRequest;
+import com.example.demo.dto.response.UserResponse;
 import java.util.List;
 
 public interface UserService {
 
-    void SignIn(User user) throws Exception;
+    UserResponse singUp(UserSignUpRequest userSignUpRequest);
 
-    User getMe() throws Exception;
+    UserResponse getMe(Long userId);
 
-    List<User> getAllUser(Integer page, Integer limit) throws Exception;
+    List<UserResponse> getUsers(Integer page, Integer limit);
 
-    void updateUser(User user) throws Exception;
+    UserResponse updateUser(Long userId, UserUpdateRequest userUpdateRequest);
 
-    void deleteUser(User user) throws Exception;
+    void deleteUser(Long userId);
 }
