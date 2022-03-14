@@ -16,8 +16,6 @@ import javax.persistence.*;
 public class MajorEntity extends BaseEntity {
     // Major CRUD는 여러분이 만들어보세요
     private String major;
-    @Column(name = "is_deleted")
-    private boolean isDeleted;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;

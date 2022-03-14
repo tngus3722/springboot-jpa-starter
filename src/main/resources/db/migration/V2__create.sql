@@ -11,7 +11,6 @@ create table if not exists major (
     id BIGINT auto_increment PRIMARY KEY,
     user_id BIGINT NOT NULL,
     major VARCHAR(20) NOT NULL,
-    is_deleted tinyint DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
