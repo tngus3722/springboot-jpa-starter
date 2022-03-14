@@ -13,8 +13,8 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "major")
-public class MajorEntity extends BaseEntity{
-
+public class MajorEntity extends BaseEntity {
+    // Major CRUD는 여러분이 만들어보세요
     private String major;
     @Column(name = "is_deleted")
     private boolean isDeleted;
