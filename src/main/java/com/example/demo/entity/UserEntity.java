@@ -24,7 +24,7 @@ public class UserEntity extends BaseEntity {
     @Column(name = "nickname")
     private String nickname;
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<MajorEntity> majorEntityList;
+    private List<MajorEntity> majorEntities;
     @OneToMany(mappedBy = "userEntity", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<AddressEntity> addressEntities;
 
