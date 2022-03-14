@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Table(name = "address")
 public class AddressEntity extends BaseEntity {
     // Address CRUD는 여러분이 만들어보세요
-    private Long id;
     @Column(name = "address")
     private String address;
     @JoinColumn(name = "user_id")
